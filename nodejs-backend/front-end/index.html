@@ -39,15 +39,32 @@
         </div>
     </form>
     <div>
-        <h2>Response from server</h2>
+        <div class="row p-3">
+            <div class="col-md-6">
+                <h2>Response from server</h2>
+            </div>
+            <div class="col-md-3"></div>
+            <div class="col-md-3">
+                <input type="button" value="Clear response" id="clear-response-btn">
+            </div>
+        </div>
+
+        <br />
+
         <div id="response"></div>
     </div>
 </body>
 <script>
+    document.getElementById('clear-response-btn').addEventListener('click', () => {
+        let response = document.getElementById('response');
+
+        response && (response.innerHTML = "");
+    })
+
     const ENDPOINTS = {
-        "java": "http:localhost:8000/api/fileupload/",
+        "java": "http://localhost:8080/api/fileupload",
         "nodejs": "/",
-        "golang": "http:localhost:8000/fileupload/"
+        "golang": "http://localhost:8000/fileupload/"
     };
 
     const fileSubmitterForm = document.getElementById("fileSubmitter");

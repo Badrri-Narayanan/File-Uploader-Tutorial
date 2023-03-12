@@ -12,7 +12,6 @@ app.get("/", (req, res) => {
 
 app.post("/", (req, res) => {
     if(req.files) {
-        console.log(req.files);
         const uploadedFile = req.files.file
         const content = uploadedFile.data.toString()
 
