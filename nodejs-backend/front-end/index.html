@@ -64,7 +64,7 @@
     const ENDPOINTS = {
         "java": "http://localhost:8080/api/fileupload",
         "nodejs": "/",
-        "golang": "http://localhost:8000/fileupload/"
+        "golang": "http://localhost:8000/fileupload"
     };
 
     const fileSubmitterForm = document.getElementById("fileSubmitter");
@@ -74,27 +74,30 @@
     fileSubmitterForm.addEventListener("submit", (e) => {
         e.preventDefault();
         const file = document.getElementsByName("file")[0].files[0];
-        const data = new FormData();
-        data.append("file", file)
 
-        responseSection.innerHTML = "Loading...";
+        if (file) {
+            const data = new FormData();
+            data.append("file", file)
 
-        const endpoint = ENDPOINTS[document.getElementById("server_type").value];
+            responseSection.innerHTML = "Loading...";
 
-        fetch(endpoint, {
-            method: 'POST',
-            body: data
-        }).then(resp => resp.json())
-            .then(res => {
-                if (res.action === 'success') {
-                    const records = res.records;
-                    responseSection.innerHTML = "";
-                    responseSection.appendChild(generateTableFromRecords(records));
-                }
-            })
-            .catch(e => {
-                console.error("something went wrong" + e, e);
-            })
+            const endpoint = ENDPOINTS[document.getElementById("server_type").value];
+
+            fetch(endpoint, {
+                method: 'POST',
+                body: data
+            }).then(resp => resp.json())
+                .then(res => {
+                    if (res.action === 'success') {
+                        const records = res.records;
+                        responseSection.innerHTML = "";
+                        responseSection.appendChild(generateTableFromRecords(records));
+                    }
+                })
+                .catch(e => {
+                    console.error("something went wrong" + e, e);
+                })
+        }
     })
 
     function generateTableFromRecords(records) {
